@@ -152,8 +152,8 @@ namespace KeyStick
 			this.freeReleasesParadisusisToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("freeReleasesParadisusisToolStripMenuItem.Image")));
 			this.freeReleasesParadisusisToolStripMenuItem.Name = "freeReleasesParadisusisToolStripMenuItem";
 			this.freeReleasesParadisusisToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
-			this.freeReleasesParadisusisToolStripMenuItem.Text = "Free releases @ Paradisus.is";
-			this.freeReleasesParadisusisToolStripMenuItem.Click += new System.EventHandler(this.OnFreeReleasesParadisusisToolStripMenuItemClick);
+			this.freeReleasesParadisusisToolStripMenuItem.Text = "Free releases @ Paradisus.io";
+			this.freeReleasesParadisusisToolStripMenuItem.Click += new System.EventHandler(this.OnFreeReleasesParadisusioToolStripMenuItemClick);
 			// 
 			// originalThreadDonationCodercomToolStripMenuItem
 			// 

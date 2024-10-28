@@ -129,13 +129,13 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Handles the free releases paradisusis tool strip menu item click.
+        /// Handles the free Releases @ Paradisus.io tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
-        private void OnFreeReleasesParadisusisToolStripMenuItemClick(object sender, EventArgs e)
+        private void OnFreeReleasesParadisusioToolStripMenuItemClick(object sender, EventArgs e)
         {
-
+			
         }
 
         /// <summary>
