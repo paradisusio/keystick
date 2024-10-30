@@ -62,6 +62,7 @@
     <Compile Include="KeyItem.cs" />
     <Compile Include="HotkeyWindow.cs" />
     <Compile Include="ModifierKeys.cs" />
+    <Compile Include="KeyPressedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
