@@ -12,10 +12,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("KeyStick")]
 [assembly: AssemblyDescription("Send key_down and key_up to specific programs by hotkey.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Paradisus.is")]
+[assembly: AssemblyCompany("Paradisus.io")]
 [assembly: AssemblyProduct("KeyStick")]
 [assembly: AssemblyCopyright("Copyright 2024 - Victor L. Senior")]
-[assembly: AssemblyTrademark("paradisus.is")]
+[assembly: AssemblyTrademark("paradisus.io")]
 [assembly: AssemblyCulture("")]
 
 // This sets the default COM visibility of types in the assembly to invisible.

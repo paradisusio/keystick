@@ -1,14 +1,21 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
-using ParadisusIo;
+﻿// <copyright file="MainForm.cs" company="Paradisus.io">
+//     CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication
+//     https://creativecommons.org/publicdomain/zero/1.0/legalcode
+// </copyright>
 
 namespace KeyStick
 {
+    // Directives
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Windows.Forms;
+    using ParadisusIo;
+
     /// <summary>
     /// Description of MainForm.
     /// </summary>
@@ -48,6 +55,16 @@ namespace KeyStick
         private SettingsData settingsData = null;
 
         /// <summary>
+        /// The settings data path.
+        /// </summary>
+        private string settingsDataPath = $"{Application.ProductName}-SettingsData.txt";
+
+        /// <summary>
+        /// The target window dictionary.
+        /// </summary>
+        private Dictionary<IntPtr, string> targetWindowDictionary = new Dictionary<IntPtr, string>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyStick.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -55,7 +72,16 @@ namespace KeyStick
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
-            InitializeComponent();
+            this.InitializeComponent();
+
+            // Set associated icon from exe file
+            this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
+
+            // Add printable characters
+            foreach (var key in Enumerable.Range(0, 256).Select(i => (char)i).Where(c => !char.IsControl(c)).ToList())
+            {
+                this.keyComboBox.Items.Add(key.ToString());
+            }
         }
 
         /// <summary>
