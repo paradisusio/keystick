@@ -33,14 +33,24 @@ namespace KeyStick
 
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
-        private const int MOD_CONTROL = 0x0002;
+        /// <summary>
+        /// Registers a hotkey with the specified window, identifier, modifiers, and virtual key code.
+        /// </summary>
+        /// <param name="hWnd">The handle of the window to receive hotkey messages.</param>
+        /// <param name="id">The identifier of the hotkey.</param>
+        /// <param name="fsModifiers">The modifier keys for the hotkey.</param>
+        /// <param name="vk">The virtual key code of the hotkey.</param>
+        /// <returns>True if the hotkey was registered successfully, false otherwise.</returns>
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
-        private const int WM_HOTKEY = 0x0312;
-
-        [DllImport("User32")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-
-        [DllImport("User32")]
+        /// <summary>
+        /// Unregisters a hotkey with the specified window and identifier.
+        /// </summary>
+        /// <param name="hWnd">The handle of the window to unregister the hotkey from.</param>
+        /// <param name="id">The identifier of the hotkey to unregister.</param>
+        /// <returns>True if the hotkey was unregistered successfully, false otherwise.</returns>
+        [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         /// <summary>
@@ -65,6 +75,11 @@ namespace KeyStick
         private Dictionary<IntPtr, string> targetWindowDictionary = new Dictionary<IntPtr, string>();
 
         /// <summary>
+        /// The hotkey window.
+        /// </summary>
+        private HotkeyWindow hotkeyWindow;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyStick.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -77,17 +92,35 @@ namespace KeyStick
             // Set associated icon from exe file
             this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
 
-            // Add printable characters to key combo box
-            foreach (var key in Enumerable.Range(0, 256).Select(i => (char)i).Where(c => !char.IsControl(c)).ToList())
-            {
-                this.keyComboBox.Items.Add(key.ToString());
-            }
+            // Set the key items list
+            List<KeyItem> keyItems = KeyItem.List;
 
             // Populate hotkey combo box
-            List<KeyItem> keyItems = KeyItem.List; // Assuming you have a static method 'List' in KeyItem class
             this.hotkeyComboBox.DataSource = keyItems;
             this.hotkeyComboBox.DisplayMember = nameof(KeyItem.Name);
             this.hotkeyComboBox.ValueMember = nameof(KeyItem.KeyCode);
+
+            // Populate key combo box
+            this.keyComboBox.DataSource = keyItems;
+            this.keyComboBox.DisplayMember = nameof(KeyItem.Name);
+            this.keyComboBox.ValueMember = nameof(KeyItem.KeyCode);
+
+            // Set the hotkey window
+            this.hotkeyWindow = new HotkeyWindow();
+
+            // Subscribe to the hotkey pressed event
+            this.hotkeyWindow.OnHotkeyPressed += OnHotkeyPressed;
+        }
+
+        /// <summary>
+        /// Handles the pressed hotkey.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnHotkeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            // Handle hotkey press
+            MessageBox.Show("Hotkey pressed: " + e.Key.ToString() + " with modifiers: " + e.Modifiers.ToString());
         }
 
         /// <summary>
@@ -219,15 +252,25 @@ namespace KeyStick
         {
 
         }
-		
-		private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
-		{
-			
-		}
-		
-		private void OnHotkeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
-		{
-			
-		}
+
+        /// <summary>
+        /// Handles the check box checked changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Handles the hotkey combo box selected index changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnHotkeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
