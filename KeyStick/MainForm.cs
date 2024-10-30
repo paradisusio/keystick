@@ -77,11 +77,17 @@ namespace KeyStick
             // Set associated icon from exe file
             this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
 
-            // Add printable characters
+            // Add printable characters to key combo box
             foreach (var key in Enumerable.Range(0, 256).Select(i => (char)i).Where(c => !char.IsControl(c)).ToList())
             {
                 this.keyComboBox.Items.Add(key.ToString());
             }
+
+            // Populate hotkey combo box
+            List<KeyItem> keyItems = KeyItem.List; // Assuming you have a static method 'List' in KeyItem class
+            this.hotkeyComboBox.DataSource = keyItems;
+            this.hotkeyComboBox.DisplayMember = nameof(KeyItem.Name);
+            this.hotkeyComboBox.ValueMember = nameof(KeyItem.KeyCode);
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnFreeReleasesParadisusioToolStripMenuItemClick(object sender, EventArgs e)
         {
-			
+
         }
 
         /// <summary>
