@@ -27,10 +27,10 @@ namespace KeyStick
         /// <value>The name.</value>
         public string Name { get; private set; }
 
-       /// <summary>
-       /// Gets the list.
-       /// </summary>
-       /// <value>The list.</value>
+        /// <summary>
+        /// Gets the list.
+        /// </summary>
+        /// <value>The list.</value>
         public static List<KeyItem> List
         {
             get

@@ -219,5 +219,15 @@ namespace KeyStick
         {
 
         }
+		
+		private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
+		{
+			
+		}
+		
+		private void OnHotkeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
+		{
+			
+		}
     }
 }

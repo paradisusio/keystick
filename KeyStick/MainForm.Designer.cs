@@ -73,9 +73,9 @@ namespace KeyStick
 			// mainMenuStrip
 			// 
 			this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.fileToolStripMenuItem,
-			this.optionsToolStripMenuItem,
-			this.helpToolStripMenuItem});
+									this.fileToolStripMenuItem,
+									this.optionsToolStripMenuItem,
+									this.helpToolStripMenuItem});
 			this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.mainMenuStrip.Name = "mainMenuStrip";
 			this.mainMenuStrip.Size = new System.Drawing.Size(254, 24);
@@ -84,9 +84,9 @@ namespace KeyStick
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.newToolStripMenuItem,
-			this.toolStripSeparator,
-			this.exitToolStripMenuItem});
+									this.newToolStripMenuItem,
+									this.toolStripSeparator,
+									this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
@@ -116,8 +116,8 @@ namespace KeyStick
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.alwaysOnTopToolStripMenuItem,
-			this.minimizeOnStickyPressToolStripMenuItem});
+									this.alwaysOnTopToolStripMenuItem,
+									this.minimizeOnStickyPressToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.optionsToolStripMenuItem.Text = "&Options";
@@ -138,11 +138,11 @@ namespace KeyStick
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.freeReleasesParadisusisToolStripMenuItem,
-			this.originalThreadDonationCodercomToolStripMenuItem,
-			this.sourceCodeGithubcomToolStripMenuItem,
-			this.toolStripSeparator2,
-			this.aboutToolStripMenuItem});
+									this.freeReleasesParadisusisToolStripMenuItem,
+									this.originalThreadDonationCodercomToolStripMenuItem,
+									this.sourceCodeGithubcomToolStripMenuItem,
+									this.toolStripSeparator2,
+									this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
@@ -186,8 +186,8 @@ namespace KeyStick
 			// mainStatusStrip
 			// 
 			this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.timeToolStripStatusLabel,
-			this.timeValueToolStripStatusLabel});
+									this.timeToolStripStatusLabel,
+									this.timeValueToolStripStatusLabel});
 			this.mainStatusStrip.Location = new System.Drawing.Point(0, 368);
 			this.mainStatusStrip.Name = "mainStatusStrip";
 			this.mainStatusStrip.Size = new System.Drawing.Size(254, 22);
@@ -264,7 +264,7 @@ namespace KeyStick
 			// targetListView
 			// 
 			this.targetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.windowColumnHeader});
+									this.windowColumnHeader});
 			this.tableLayoutPanel1.SetColumnSpan(this.targetListView, 2);
 			this.targetListView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.targetListView.Location = new System.Drawing.Point(3, 38);
@@ -321,6 +321,7 @@ namespace KeyStick
 			this.controlCheckBox.Text = "&CTRL";
 			this.controlCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.controlCheckBox.UseVisualStyleBackColor = true;
+			this.controlCheckBox.CheckedChanged += new System.EventHandler(this.OnCheckBoxCheckedChanged);
 			// 
 			// altCheckBox
 			// 
@@ -332,6 +333,7 @@ namespace KeyStick
 			this.altCheckBox.Text = "&ALT";
 			this.altCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.altCheckBox.UseVisualStyleBackColor = true;
+			this.altCheckBox.CheckedChanged += new System.EventHandler(this.OnCheckBoxCheckedChanged);
 			// 
 			// shiftCheckBox
 			// 
@@ -343,6 +345,7 @@ namespace KeyStick
 			this.shiftCheckBox.Text = "&SHIFT";
 			this.shiftCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.shiftCheckBox.UseVisualStyleBackColor = true;
+			this.shiftCheckBox.CheckedChanged += new System.EventHandler(this.OnCheckBoxCheckedChanged);
 			// 
 			// hotkeyComboBox
 			// 
@@ -353,6 +356,7 @@ namespace KeyStick
 			this.hotkeyComboBox.Name = "hotkeyComboBox";
 			this.hotkeyComboBox.Size = new System.Drawing.Size(59, 21);
 			this.hotkeyComboBox.TabIndex = 4;
+			this.hotkeyComboBox.SelectedIndexChanged += new System.EventHandler(this.OnHotkeyComboBoxSelectedIndexChanged);
 			// 
 			// keyLabel
 			// 
@@ -417,7 +421,6 @@ namespace KeyStick
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
 		private System.Windows.Forms.Timer keyPressTimer;
 		private System.Windows.Forms.ToolStripMenuItem freeReleasesParadisusisToolStripMenuItem;
