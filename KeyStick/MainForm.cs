@@ -272,5 +272,18 @@ namespace KeyStick
         {
 
         }
+
+        /// <summary>
+        /// Dispose the window.
+        /// </summary>
+        /// <param name="disposing">If set to <c>true</c> disposing.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.hotkeyWindow.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
