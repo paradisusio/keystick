@@ -184,8 +184,8 @@ namespace KeyStick
             // Unregister any previous hotkey
             this.hotkeyWindow.UnregisterHotkey(false);
 
-            // Register a hotkey (Ctrl+Shift+A)
-
+            // Register the current hotkey 
+            this.hotkeyWindow.RegisterHotKey((Keys)this.hotkeyComboBox.SelectedItem, (this.controlCheckBox.Checked ? Modifiers.Control : 0) | (this.shiftCheckBox.Checked ? Modifiers.Shift : 0) | (this.altCheckBox.Checked ? Modifiers.Alt : 0), false);
         }
 
         /// <summary>
