@@ -340,7 +340,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnHotkeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // Set the hotkey
+            this.SetHotkey();
         }
     }
 }
