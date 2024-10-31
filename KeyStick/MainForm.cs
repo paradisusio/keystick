@@ -54,6 +54,32 @@ namespace KeyStick
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         /// <summary>
+        /// Posts a message to a window.
+        /// </summary>
+        /// <param name="hWnd">The handle of the window to receive the message.</param>
+        /// <param name="Msg">The message to send.</param>
+        /// <param name="wParam">The first message parameter.</param>
+        /// <param name="lParam">The second message parameter.</param>
+        /// <returns>True if the message was posted successfully, false otherwise.</returns>
+        [DllImport("user32.dll")]
+        static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// The window message ID for a keydown event.
+        /// </summary>
+        private const int WM_KEYDOWN = 0x0100;
+
+        /// <summary>
+        /// The window message ID for a keyup event.
+        /// </summary>
+        private const int WM_KEYUP = 0x0101;
+
+        /// <summary>
+        /// The target window handle.
+        /// </summary>
+        private IntPtr targetWindowHandle = IntPtr.Zero;
+
+        /// <summary>
         /// Gets or sets the associated icon.
         /// </summary>
         /// <value>The associated icon.</value>
@@ -135,11 +161,13 @@ namespace KeyStick
         /// Unregisters a previously registered hotkey.
         /// </summary>
         /// <param name="adviseUser">If set to <c>true</c> advise user.</param>
-        private void UnregisterHotkey(bool adviseUser)
+        private bool UnregisterHotkey(bool adviseUser)
         {
+            bool success = false;
+
             try
             {
-                bool success = UnregisterHotKey(hotkeyWindow.Handle, 1);
+                success = UnregisterHotKey(hotkeyWindow.Handle, 1);
 
                 if (adviseUser && !success)
                 {
@@ -152,6 +180,8 @@ namespace KeyStick
                 // Let it fall through
                 ;
             }
+
+            return success;
         }
 
         /// <summary>
