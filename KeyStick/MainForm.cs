@@ -185,6 +185,64 @@ namespace KeyStick
         }
 
         /// <summary>
+        /// Populates the target window list.
+        /// </summary>
+        private void PopulateTargetWindowList()
+        {
+            // Begin updating
+            this.targetListView.BeginUpdate();
+
+            // Reset 
+            this.targetWindowDictionary.Clear();
+            this.targetListView.Items.Clear();
+
+            // Add windows
+            if (EnumDesktopWindows(IntPtr.Zero, EnumDesktopWindowsCallback, IntPtr.Zero))
+            {
+                foreach (var window in targetWindowDictionary)
+                {
+                    // Add 
+                    var listVIewItem = new ListViewItem()
+                    {
+                        Text = window.Value,
+                        Tag = window.Key
+                    };
+
+                    this.targetListView.Items.Add(listVIewItem);
+                }
+            }
+
+            // Adjust column width 
+            this.targetListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            // End updating
+            this.targetListView.EndUpdate();
+        }
+
+        /// <summary>
+        /// Enums the desktop windows callback.
+        /// </summary>
+        /// <returns><c>true</c>, if desktop windows callback was enumed, <c>false</c> otherwise.</returns>
+        /// <param name="hWnd">H window.</param>
+        /// <param name="lParam">L parameter.</param>
+        private bool EnumDesktopWindowsCallback(IntPtr hWnd, int lParam)
+        {
+            StringBuilder titleStringBuilder = new StringBuilder(1024);
+
+            GetWindowText(hWnd, titleStringBuilder, titleStringBuilder.Capacity + 1);
+
+            string windowTitle = titleStringBuilder.ToString();
+
+            // TODO Visible, with text and not self [May be good to handle the start and manager additions]
+            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(windowTitle) == false && hWnd != this.Handle)
+            {
+                targetWindowDictionary.Add(hWnd, windowTitle);
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Handles the pressed hotkey.
         /// </summary>
         /// <param name="sender">Sender.</param>
