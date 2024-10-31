@@ -112,7 +112,6 @@ namespace KeyStick
             this.hotkeyWindow.OnHotkeyPressed += this.OnHotkeyPressed;
         }
 
-
         /// <summary>
         /// Registers a hotkey with the specified key and modifiers.
         /// </summary>
@@ -129,6 +128,29 @@ namespace KeyStick
             {
                 // Handle registration failure
                 MessageBox.Show("Failed to register hotkey.");
+            }
+        }
+
+        /// <summary>
+        /// Unregisters a previously registered hotkey.
+        /// </summary>
+        /// <param name="adviseUser">If set to <c>true</c> advise user.</param>
+        private void UnregisterHotkey(bool adviseUser)
+        {
+            try
+            {
+                bool success = UnregisterHotKey(hotkeyWindow.Handle, 1);
+
+                if (adviseUser && !success)
+                {
+                    // Handle unregistration failure
+                    MessageBox.Show("Failed to unregister hotkey.");
+                }
+            }
+            catch
+            {
+                // Let it fall through
+                ;
             }
         }
 
