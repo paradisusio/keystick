@@ -109,7 +109,27 @@ namespace KeyStick
             this.hotkeyWindow = new HotkeyWindow();
 
             // Subscribe to the hotkey pressed event
-            this.hotkeyWindow.OnHotkeyPressed += OnHotkeyPressed;
+            this.hotkeyWindow.OnHotkeyPressed += this.OnHotkeyPressed;
+        }
+
+
+        /// <summary>
+        /// Registers a hotkey with the specified key and modifiers.
+        /// </summary>
+        /// <param name="key">The key to register.</param>
+        /// <param name="modifiers">The modifier keys to combine with the key.</param>
+        private void RegisterHotKey(Keys key, ModifierKeys modifiers)
+        {
+            uint vk = (uint)Enum.Parse(typeof(Keys), key.ToString());
+            uint fsModifiers = (uint)modifiers;
+
+            bool success = RegisterHotKey(hotkeyWindow.Handle, 1, fsModifiers, vk);
+
+            if (!success)
+            {
+                // Handle registration failure
+                MessageBox.Show("Failed to register hotkey.");
+            }
         }
 
         /// <summary>
@@ -160,7 +180,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-
+            // Dispose of the hotkey window
+            this.hotkeyWindow.Dispose();
         }
 
         /// <summary>
@@ -271,19 +292,6 @@ namespace KeyStick
         private void OnHotkeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
 
-        }
-
-        /// <summary>
-        /// Dispose the window.
-        /// </summary>
-        /// <param name="disposing">If set to <c>true</c> disposing.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                this.hotkeyWindow.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
