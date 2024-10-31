@@ -1,8 +1,9 @@
-﻿using System;
-namespace KeyStick
+﻿namespace KeyStick
 {
+    using System;
+
     [Flags]
-    public enum ModifierKeys
+    public enum Modifiers
     {
         None = 0x0000,
         Alt = 0x0001,

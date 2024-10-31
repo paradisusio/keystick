@@ -34,26 +34,6 @@ namespace KeyStick
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
         /// <summary>
-        /// Registers a hotkey with the specified window, identifier, modifiers, and virtual key code.
-        /// </summary>
-        /// <param name="hWnd">The handle of the window to receive hotkey messages.</param>
-        /// <param name="id">The identifier of the hotkey.</param>
-        /// <param name="fsModifiers">The modifier keys for the hotkey.</param>
-        /// <param name="vk">The virtual key code of the hotkey.</param>
-        /// <returns>True if the hotkey was registered successfully, false otherwise.</returns>
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-        /// <summary>
-        /// Unregisters a hotkey with the specified window and identifier.
-        /// </summary>
-        /// <param name="hWnd">The handle of the window to unregister the hotkey from.</param>
-        /// <param name="id">The identifier of the hotkey to unregister.</param>
-        /// <returns>True if the hotkey was unregistered successfully, false otherwise.</returns>
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        /// <summary>
         /// Posts a message to a window.
         /// </summary>
         /// <param name="hWnd">The handle of the window to receive the message.</param>
@@ -139,52 +119,6 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Registers a hotkey with the specified key and modifiers.
-        /// </summary>
-        /// <param name="key">The key to register.</param>
-        /// <param name="modifiers">The modifier keys to combine with the key.</param>
-        private void RegisterHotKey(Keys key, ModifierKeys modifiers)
-        {
-            uint vk = (uint)Enum.Parse(typeof(Keys), key.ToString());
-            uint fsModifiers = (uint)modifiers;
-
-            bool success = RegisterHotKey(hotkeyWindow.Handle, 1, fsModifiers, vk);
-
-            if (!success)
-            {
-                // Handle registration failure
-                MessageBox.Show("Failed to register hotkey.");
-            }
-        }
-
-        /// <summary>
-        /// Unregisters a previously registered hotkey.
-        /// </summary>
-        /// <param name="adviseUser">If set to <c>true</c> advise user.</param>
-        private bool UnregisterHotkey(bool adviseUser)
-        {
-            bool success = false;
-
-            try
-            {
-                success = UnregisterHotKey(hotkeyWindow.Handle, 1);
-
-                if (adviseUser && !success)
-                {
-                    // Handle unregistration failure
-                    MessageBox.Show("Failed to unregister hotkey.");
-                }
-            }
-            catch
-            {
-                // Let it fall through
-                ;
-            }
-
-            return success;
-        }
-
-        /// <summary>
         /// Populates the target window list.
         /// </summary>
         private void PopulateTargetWindowList()
@@ -243,6 +177,18 @@ namespace KeyStick
         }
 
         /// <summary>
+        /// Sets the hotkey.
+        /// </summary>
+        private void SetHotkey()
+        {
+            // Unregister any previous hotkey
+            this.hotkeyWindow.UnregisterHotkey(false);
+
+            // Register a hotkey (Ctrl+Shift+A)
+
+        }
+
+        /// <summary>
         /// Handles the pressed hotkey.
         /// </summary>
         /// <param name="sender">Sender.</param>
@@ -281,7 +227,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnMainFormLoad(object sender, EventArgs e)
         {
-
+            // Populate list
+            this.PopulateTargetWindowList();
         }
 
         /// <summary>
@@ -301,16 +248,6 @@ namespace KeyStick
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
         private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Handles the minimize on loop start tool strip menu item click.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">E.</param>
-        private void OnMinimizeOnLoopStartToolStripMenuItemClick(object sender, EventArgs e)
         {
 
         }

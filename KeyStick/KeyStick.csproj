@@ -61,7 +61,7 @@
     <Compile Include="SettingsData.cs" />
     <Compile Include="KeyItem.cs" />
     <Compile Include="HotkeyWindow.cs" />
-    <Compile Include="ModifierKeys.cs" />
+    <Compile Include="Modifiers.cs" />
     <Compile Include="KeyPressedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
