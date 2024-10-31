@@ -329,7 +329,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
         {
-
+            // Set the hotkey
+            this.SetHotkey();
         }
 
         /// <summary>
