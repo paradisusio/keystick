@@ -181,6 +181,17 @@ namespace KeyStick
         /// </summary>
         private void SetHotkey()
         {
+            /* Checks */
+
+            // At least one checkbox and a key
+            if ((!this.controlCheckBox.Checked && !this.altCheckBox.Checked && !this.shiftCheckBox.Checked) || this.hotkeyComboBox.SelectedText.ToLowerInvariant() == "none")
+            {
+                // Halt flow
+                return;
+            }
+
+            /* Set it */
+
             // Unregister any previous hotkey
             this.hotkeyWindow.UnregisterHotkey(false);
 
