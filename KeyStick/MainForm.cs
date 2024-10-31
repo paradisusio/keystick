@@ -270,7 +270,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnRefreshButtonClick(object sender, EventArgs e)
         {
-
+            // Populate list
+            this.PopulateTargetWindowList();
         }
 
         /// <summary>
