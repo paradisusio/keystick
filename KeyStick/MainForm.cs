@@ -206,8 +206,9 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnHotkeyPressed(object sender, KeyPressedEventArgs e)
         {
-            // Handle hotkey press
-            MessageBox.Show("Hotkey pressed: " + e.Key.ToString() + " with modifiers: " + e.Modifiers.ToString());
+            // Toggle checkbox
+            this.keyPressCheckBox.Checked = !this.keyPressCheckBox.Checked;
+
         }
 
         /// <summary>
