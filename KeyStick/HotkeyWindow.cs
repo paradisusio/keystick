@@ -29,7 +29,7 @@ namespace KeyStick
         /// <param name="vk">The virtual key code of the hotkey.</param>
         /// <returns>True if the hotkey was registered successfully, false otherwise.</returns>
         [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
 
         /// <summary>
         /// Unregisters a hotkey with the specified window and identifier.
@@ -59,8 +59,9 @@ namespace KeyStick
         {
             bool success = false;
 
-            uint vk = (uint)Enum.Parse(typeof(Keys), key.ToString());
-            uint fsModifiers = (uint)modifiers;
+            int vk = (int)key;
+
+            int fsModifiers = (int)modifiers;
 
             try
             {

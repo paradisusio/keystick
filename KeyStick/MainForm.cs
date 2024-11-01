@@ -167,7 +167,7 @@ namespace KeyStick
 
             string windowTitle = titleStringBuilder.ToString();
 
-            // TODO Visible, with text and not self [May be good to handle the start and manager additions]
+            // TODO Visible, with text and not self [Handle title collisions by adding (1), (2), (3), etc.]
             if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(windowTitle) == false && hWnd != this.Handle)
             {
                 targetWindowDictionary.Add(hWnd, windowTitle);
@@ -184,7 +184,7 @@ namespace KeyStick
             /* Checks */
 
             // At least one checkbox and a key
-            if ((!this.controlCheckBox.Checked && !this.altCheckBox.Checked && !this.shiftCheckBox.Checked) || this.hotkeyComboBox.SelectedText.ToLowerInvariant() == "none")
+            if ((!this.controlCheckBox.Checked && !this.altCheckBox.Checked && !this.shiftCheckBox.Checked) || ((KeyItem)this.hotkeyComboBox.SelectedItem).Name.ToLowerInvariant() == "none")
             {
                 // Halt flow
                 return;
@@ -196,7 +196,7 @@ namespace KeyStick
             this.hotkeyWindow.UnregisterHotkey(false);
 
             // Register the current hotkey 
-            this.hotkeyWindow.RegisterHotKey((Keys)this.hotkeyComboBox.SelectedItem, (this.controlCheckBox.Checked ? Modifiers.Control : 0) | (this.shiftCheckBox.Checked ? Modifiers.Shift : 0) | (this.altCheckBox.Checked ? Modifiers.Alt : 0), false);
+            this.hotkeyWindow.RegisterHotKey(((KeyItem)this.hotkeyComboBox.SelectedItem).KeyCode, ((this.controlCheckBox.Checked ? Modifiers.Control : 0) | (this.shiftCheckBox.Checked ? Modifiers.Shift : 0) | (this.altCheckBox.Checked ? Modifiers.Alt : 0)), false);
         }
 
         /// <summary>
@@ -249,6 +249,9 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            // Unregister any active hotkey
+            this.hotkeyWindow.UnregisterHotkey(false);
+
             // Dispose of the hotkey window
             this.hotkeyWindow.Dispose();
         }
