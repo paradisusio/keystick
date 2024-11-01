@@ -357,17 +357,11 @@ namespace KeyStick
             if (!this.keyPressCheckBox.Checked)
             {
                 // Check for both a selected window and target key
-                if (this.targetListView.SelectedItems.Count == 0 || ((KeyItem)this.keyComboBox.SelectedItem).Name.ToLowerInvariant() == "none")
+                if (this.targetWindowHandle == IntPtr.Zero || ((KeyItem)this.keyComboBox.SelectedItem).Name.ToLowerInvariant() == "none")
                 {
                     // Halt flow
                     return;
                 }
-
-                // Set the target window handle
-                this.targetWindowHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
-
-                // Set the key
-                this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
 
                 try
                 {
@@ -399,14 +393,27 @@ namespace KeyStick
             }
         }
 
-        void OnTargetListViewSelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Handles the target list view selected index changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnTargetListViewSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // Set the target window handle
+            this.targetWindowHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
         }
 
-        void OnKeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Handles the key combo box selected index changed.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnKeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //# 
+            // Set the key
+            //# this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
         }
     }
 }
