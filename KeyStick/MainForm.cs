@@ -296,16 +296,6 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Handles the exit tool strip menu item click.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">E.</param>
-        private void OnExitToolStripMenuItemClick(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Handles the key press timer tick.
         /// </summary>
         /// <param name="sender">Sender.</param>
@@ -413,6 +403,17 @@ namespace KeyStick
         {
             // Set the key
             this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
+        }
+
+        /// <summary>
+        /// Handles the exit tool strip menu item click.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnExitToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            // Close program
+            this.Close();
         }
     }
 }

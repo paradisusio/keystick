@@ -38,7 +38,8 @@ namespace KeyStick
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.minimizeOnStickyPressToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.minimizeOnKeydownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.restoreOnKeyupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.freeReleasesParadisusisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.originalThreadDonationCodercomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,6 +100,7 @@ namespace KeyStick
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
 			this.newToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
 			this.newToolStripMenuItem.Text = "&New";
+			this.newToolStripMenuItem.Visible = false;
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.OnNewToolStripMenuItemClick);
 			// 
 			// toolStripSeparator
@@ -117,7 +119,8 @@ namespace KeyStick
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.alwaysOnTopToolStripMenuItem,
-									this.minimizeOnStickyPressToolStripMenuItem});
+									this.minimizeOnKeydownToolStripMenuItem,
+									this.restoreOnKeyupToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.optionsToolStripMenuItem.Text = "&Options";
@@ -126,14 +129,22 @@ namespace KeyStick
 			// alwaysOnTopToolStripMenuItem
 			// 
 			this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
-			this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+			this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
 			this.alwaysOnTopToolStripMenuItem.Text = "&Always on top";
 			// 
-			// minimizeOnStickyPressToolStripMenuItem
+			// minimizeOnKeydownToolStripMenuItem
 			// 
-			this.minimizeOnStickyPressToolStripMenuItem.Name = "minimizeOnStickyPressToolStripMenuItem";
-			this.minimizeOnStickyPressToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
-			this.minimizeOnStickyPressToolStripMenuItem.Text = "&Minimize on sticky press";
+			this.minimizeOnKeydownToolStripMenuItem.Name = "minimizeOnKeydownToolStripMenuItem";
+			this.minimizeOnKeydownToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+			this.minimizeOnKeydownToolStripMenuItem.Text = "&Minimize on key_down";
+			this.minimizeOnKeydownToolStripMenuItem.Visible = false;
+			// 
+			// restoreOnKeyupToolStripMenuItem
+			// 
+			this.restoreOnKeyupToolStripMenuItem.Name = "restoreOnKeyupToolStripMenuItem";
+			this.restoreOnKeyupToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+			this.restoreOnKeyupToolStripMenuItem.Text = "&Restore on key_up";
+			this.restoreOnKeyupToolStripMenuItem.Visible = false;
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -193,12 +204,14 @@ namespace KeyStick
 			this.mainStatusStrip.Size = new System.Drawing.Size(254, 22);
 			this.mainStatusStrip.SizingGrip = false;
 			this.mainStatusStrip.TabIndex = 44;
+			this.mainStatusStrip.Visible = false;
 			// 
 			// timeToolStripStatusLabel
 			// 
 			this.timeToolStripStatusLabel.Name = "timeToolStripStatusLabel";
 			this.timeToolStripStatusLabel.Size = new System.Drawing.Size(37, 17);
 			this.timeToolStripStatusLabel.Text = "Time:";
+			this.timeToolStripStatusLabel.Visible = false;
 			// 
 			// timeValueToolStripStatusLabel
 			// 
@@ -206,6 +219,7 @@ namespace KeyStick
 			this.timeValueToolStripStatusLabel.Name = "timeValueToolStripStatusLabel";
 			this.timeValueToolStripStatusLabel.Size = new System.Drawing.Size(38, 17);
 			this.timeValueToolStripStatusLabel.Text = "00:00";
+			this.timeValueToolStripStatusLabel.Visible = false;
 			// 
 			// tableLayoutPanel1
 			// 
@@ -233,7 +247,7 @@ namespace KeyStick
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 344);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(254, 366);
 			this.tableLayoutPanel1.TabIndex = 46;
 			// 
 			// refreshButton
@@ -241,7 +255,7 @@ namespace KeyStick
 			this.tableLayoutPanel1.SetColumnSpan(this.refreshButton, 2);
 			this.refreshButton.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.refreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.refreshButton.Location = new System.Drawing.Point(3, 217);
+			this.refreshButton.Location = new System.Drawing.Point(3, 239);
 			this.refreshButton.Name = "refreshButton";
 			this.refreshButton.Size = new System.Drawing.Size(248, 29);
 			this.refreshButton.TabIndex = 2;
@@ -270,7 +284,7 @@ namespace KeyStick
 			this.targetListView.Location = new System.Drawing.Point(3, 38);
 			this.targetListView.MultiSelect = false;
 			this.targetListView.Name = "targetListView";
-			this.targetListView.Size = new System.Drawing.Size(248, 173);
+			this.targetListView.Size = new System.Drawing.Size(248, 195);
 			this.targetListView.TabIndex = 10;
 			this.targetListView.UseCompatibleStateImageBehavior = false;
 			this.targetListView.View = System.Windows.Forms.View.Details;
@@ -286,7 +300,7 @@ namespace KeyStick
 			this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
 			this.panel1.Controls.Add(this.tableLayoutPanel2);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(0, 249);
+			this.panel1.Location = new System.Drawing.Point(0, 271);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(254, 30);
@@ -363,7 +377,7 @@ namespace KeyStick
 			// 
 			this.keyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.keyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-			this.keyLabel.Location = new System.Drawing.Point(3, 279);
+			this.keyLabel.Location = new System.Drawing.Point(3, 301);
 			this.keyLabel.Name = "keyLabel";
 			this.keyLabel.Size = new System.Drawing.Size(121, 30);
 			this.keyLabel.TabIndex = 14;
@@ -375,7 +389,7 @@ namespace KeyStick
 			this.keyComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.keyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.keyComboBox.FormattingEnabled = true;
-			this.keyComboBox.Location = new System.Drawing.Point(130, 283);
+			this.keyComboBox.Location = new System.Drawing.Point(130, 305);
 			this.keyComboBox.Name = "keyComboBox";
 			this.keyComboBox.Size = new System.Drawing.Size(121, 21);
 			this.keyComboBox.TabIndex = 15;
@@ -388,7 +402,7 @@ namespace KeyStick
 			this.tableLayoutPanel1.SetColumnSpan(this.keyPressCheckBox, 2);
 			this.keyPressCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.keyPressCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
-			this.keyPressCheckBox.Location = new System.Drawing.Point(3, 312);
+			this.keyPressCheckBox.Location = new System.Drawing.Point(3, 334);
 			this.keyPressCheckBox.Name = "keyPressCheckBox";
 			this.keyPressCheckBox.Size = new System.Drawing.Size(248, 29);
 			this.keyPressCheckBox.TabIndex = 16;
@@ -425,9 +439,10 @@ namespace KeyStick
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem restoreOnKeyupToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem minimizeOnKeydownToolStripMenuItem;
 		private System.Windows.Forms.Timer keyPressTimer;
 		private System.Windows.Forms.ToolStripMenuItem freeReleasesParadisusisToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem minimizeOnStickyPressToolStripMenuItem;
 		private System.Windows.Forms.CheckBox keyPressCheckBox;
 		private System.Windows.Forms.ComboBox hotkeyComboBox;
 		private System.Windows.Forms.CheckBox shiftCheckBox;
