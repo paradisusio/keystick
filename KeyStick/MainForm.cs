@@ -34,30 +34,14 @@ namespace KeyStick
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
         /// <summary>
-        /// Posts a message to a window.
-        /// </summary>
-        /// <param name="hWnd">The handle of the window to receive the message.</param>
-        /// <param name="Msg">The message to send.</param>
-        /// <param name="wParam">The first message parameter.</param>
-        /// <param name="lParam">The second message parameter.</param>
-        /// <returns>True if the message was posted successfully, false otherwise.</returns>
-        [DllImport("user32.dll")]
-        static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-        /// <summary>
-        /// The window message ID for a keydown event.
-        /// </summary>
-        private const int WM_KEYDOWN = 0x0100;
-
-        /// <summary>
-        /// The window message ID for a keyup event.
-        /// </summary>
-        private const int WM_KEYUP = 0x0101;
-
-        /// <summary>
         /// The target window handle.
         /// </summary>
         private IntPtr targetWindowHandle = IntPtr.Zero;
+
+        /// <summary>
+        /// The target key.
+        /// </summary>
+        private Keys targetKey = Keys.None;
 
         /// <summary>
         /// Gets or sets the associated icon.
@@ -81,9 +65,9 @@ namespace KeyStick
         private Dictionary<IntPtr, string> targetWindowDictionary = new Dictionary<IntPtr, string>();
 
         /// <summary>
-        /// The hotkey window.
+        /// The key native window.
         /// </summary>
-        private HotkeyWindow hotkeyWindow;
+        private KeyNativeWindow keyNativeWindow;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyStick.MainForm"/> class.
@@ -99,23 +83,28 @@ namespace KeyStick
             this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
 
             // Set the key items list
-            List<KeyItem> keyItems = KeyItem.List;
+            List<KeyItem> hotKeyKeyItemsList = new List<KeyItem>();
+            hotKeyKeyItemsList.AddRange(KeyItem.List);
 
             // Populate hotkey combo box
-            this.hotkeyComboBox.DataSource = keyItems;
+            this.hotkeyComboBox.DataSource = hotKeyKeyItemsList;
             this.hotkeyComboBox.DisplayMember = nameof(KeyItem.Name);
             this.hotkeyComboBox.ValueMember = nameof(KeyItem.KeyCode);
 
+            // Set the key items list
+            List<KeyItem> keyKeyItemsList = new List<KeyItem>();
+            keyKeyItemsList.AddRange(KeyItem.List);
+
             // Populate key combo box
-            this.keyComboBox.DataSource = keyItems;
+            this.keyComboBox.DataSource = keyKeyItemsList;
             this.keyComboBox.DisplayMember = nameof(KeyItem.Name);
             this.keyComboBox.ValueMember = nameof(KeyItem.KeyCode);
 
             // Set the hotkey window
-            this.hotkeyWindow = new HotkeyWindow();
+            this.keyNativeWindow = new KeyNativeWindow();
 
             // Subscribe to the hotkey pressed event
-            this.hotkeyWindow.OnHotkeyPressed += this.OnHotkeyPressed;
+            this.keyNativeWindow.OnHotkeyPressed += this.OnHotkeyPressed;
         }
 
         /// <summary>
@@ -193,10 +182,10 @@ namespace KeyStick
             /* Set it */
 
             // Unregister any previous hotkey
-            this.hotkeyWindow.UnregisterHotkey(false);
+            this.keyNativeWindow.UnregisterHotkey(false);
 
             // Register the current hotkey 
-            this.hotkeyWindow.RegisterHotKey(((KeyItem)this.hotkeyComboBox.SelectedItem).KeyCode, ((this.controlCheckBox.Checked ? Modifiers.Control : 0) | (this.shiftCheckBox.Checked ? Modifiers.Shift : 0) | (this.altCheckBox.Checked ? Modifiers.Alt : 0)), false);
+            this.keyNativeWindow.RegisterHotKey(((KeyItem)this.hotkeyComboBox.SelectedItem).KeyCode, ((this.controlCheckBox.Checked ? Modifiers.Control : 0) | (this.shiftCheckBox.Checked ? Modifiers.Shift : 0) | (this.altCheckBox.Checked ? Modifiers.Alt : 0)), false);
         }
 
         /// <summary>
@@ -206,19 +195,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnHotkeyPressed(object sender, KeyPressedEventArgs e)
         {
-            // Toggle checkbox
-            this.keyPressCheckBox.Checked = !this.keyPressCheckBox.Checked;
-
-        }
-
-        /// <summary>
-        /// Handles the key press check box checked changed.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">E.</param>
-        private void OnKeyPressCheckBoxCheckedChanged(object sender, EventArgs e)
-        {
-
+            // Process the key press simulation
+            this.ProcessKeyPress();
         }
 
         /// <summary>
@@ -251,10 +229,10 @@ namespace KeyStick
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
             // Unregister any active hotkey
-            this.hotkeyWindow.UnregisterHotkey(false);
+            this.keyNativeWindow.UnregisterHotkey(false);
 
             // Dispose of the hotkey window
-            this.hotkeyWindow.Dispose();
+            this.keyNativeWindow.Dispose();
         }
 
         /// <summary>
@@ -357,6 +335,78 @@ namespace KeyStick
         {
             // Set the hotkey
             this.SetHotkey();
+        }
+
+        /// <summary>
+        /// Handles the key press check box click.
+        /// </summary>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">E.</param>
+        private void OnKeyPressCheckBoxClick(object sender, EventArgs e)
+        {
+            // Process the key press simulation
+            this.ProcessKeyPress();
+        }
+
+        /// <summary>
+        /// Processes the key press.
+        /// </summary>
+        private void ProcessKeyPress()
+        {
+            // If unchecked, set variables and send keydown
+            if (!this.keyPressCheckBox.Checked)
+            {
+                // Check for both a selected window and target key
+                if (this.targetListView.SelectedItems.Count == 0 || ((KeyItem)this.keyComboBox.SelectedItem).Name.ToLowerInvariant() == "none")
+                {
+                    // Halt flow
+                    return;
+                }
+
+                // Set the target window handle
+                this.targetWindowHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
+
+                // Set the key
+                this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
+
+                try
+                {
+                    // TODO Send a keydown event [Can check for valid handle]
+                    this.keyNativeWindow.SendKeyDown(this.targetWindowHandle, this.targetKey);
+                }
+                catch (Exception ex)
+                {
+                    ;
+                }
+
+                // Set checked state
+                this.keyPressCheckBox.Checked = true;
+            }
+            else
+            {
+                try
+                {
+                    // TODO Send a keyup event [Can check for valid handle]
+                    this.keyNativeWindow.SendKeyUp(this.targetWindowHandle, this.targetKey);
+                }
+                catch (Exception ex)
+                {
+                    ;
+                }
+
+                // Set checked state
+                this.keyPressCheckBox.Checked = false;
+            }
+        }
+
+        void OnTargetListViewSelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        void OnKeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

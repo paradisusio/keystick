@@ -10,7 +10,7 @@ namespace KeyStick
     using System.Windows.Forms;
 
     /// <summary>
-    /// Provides data for the <see cref="HotkeyWindow.OnHotkeyPressed"/> event.
+    /// Provides data for the <see cref="KeyStickNativeWindow.OnHotkeyPressed"/> event.
     /// </summary>
     public class KeyPressedEventArgs : EventArgs
     {

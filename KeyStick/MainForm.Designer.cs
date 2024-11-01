@@ -274,6 +274,7 @@ namespace KeyStick
 			this.targetListView.TabIndex = 10;
 			this.targetListView.UseCompatibleStateImageBehavior = false;
 			this.targetListView.View = System.Windows.Forms.View.Details;
+			this.targetListView.SelectedIndexChanged += new System.EventHandler(this.OnTargetListViewSelectedIndexChanged);
 			// 
 			// windowColumnHeader
 			// 
@@ -378,10 +379,12 @@ namespace KeyStick
 			this.keyComboBox.Name = "keyComboBox";
 			this.keyComboBox.Size = new System.Drawing.Size(121, 21);
 			this.keyComboBox.TabIndex = 15;
+			this.keyComboBox.SelectedIndexChanged += new System.EventHandler(this.OnKeyComboBoxSelectedIndexChanged);
 			// 
 			// keyPressCheckBox
 			// 
 			this.keyPressCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+			this.keyPressCheckBox.AutoCheck = false;
 			this.tableLayoutPanel1.SetColumnSpan(this.keyPressCheckBox, 2);
 			this.keyPressCheckBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.keyPressCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
@@ -392,7 +395,7 @@ namespace KeyStick
 			this.keyPressCheckBox.Text = "&Press key";
 			this.keyPressCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.keyPressCheckBox.UseVisualStyleBackColor = true;
-			this.keyPressCheckBox.CheckedChanged += new System.EventHandler(this.OnKeyPressCheckBoxCheckedChanged);
+			this.keyPressCheckBox.Click += new System.EventHandler(this.OnKeyPressCheckBoxClick);
 			// 
 			// keyPressTimer
 			// 

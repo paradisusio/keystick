@@ -1,4 +1,4 @@
-﻿// <copyright file="HotkeyWindow.cs" company="Paradisus.io">
+﻿// <copyright file="KeyNativeWindow.cs" company="Paradisus.io">
 //     CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication
 //     https://creativecommons.org/publicdomain/zero/1.0/legalcode
 // </copyright>
@@ -11,9 +11,9 @@ namespace KeyStick
     using System.Windows.Forms;
 
     /// <summary>
-    /// Hotkey window.
+    /// KeyNativeWindow window.
     /// </summary>
-    public class HotkeyWindow : NativeWindow, IDisposable
+    public class KeyNativeWindow : NativeWindow, IDisposable
     {
         /// <summary>
         /// The wm hotkey.
@@ -41,9 +41,39 @@ namespace KeyStick
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         /// <summary>
+        /// The window message ID for a keydown event.
+        /// </summary>
+        private const int WM_KEYDOWN = 0x0100;
+
+        /// <summary>
+        /// The window message ID for a keyup event.
+        /// </summary>
+        private const int WM_KEYUP = 0x0101;
+
+        /// <summary>
+        /// Posts a message to a window.
+        /// </summary>
+        /// <param name="hWnd">The handle of the window to receive the message.</param>
+        /// <param name="Msg">The message to send.</param>
+        /// <param name="wParam">The first message parameter.</param>
+        /// <param name="lParam">The second message parameter.</param>
+        /// <returns>True if the message was posted successfully, false otherwise.</returns>
+        [DllImport("user32.dll")]
+        static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Maps the virtual key.
+        /// </summary>
+        /// <returns>The virtual key.</returns>
+        /// <param name="uCode">U code.</param>
+        /// <param name="uMapType">U map type.</param>
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyStick.HotkeyWindow"/> class.
         /// </summary>
-        public HotkeyWindow()
+        public KeyNativeWindow()
         {
             // Create a hidden window for message handling
             CreateHandle(new CreateParams());
@@ -126,6 +156,32 @@ namespace KeyStick
                 // Handle the hotkey press (e.g., call an event handler)
                 OnHotkeyPressed?.Invoke(this, new KeyPressedEventArgs(modifier, key));
             }
+        }
+
+        /// <summary>
+        /// Sends the key down.
+        /// </summary>
+        /// <param name="targetWindowHandle">Target window handle.</param>
+        /// <param name="targetKey">Target key.</param>
+        public void SendKeyDown(IntPtr targetWindowHandle, Keys targetKey)
+        {
+            uint virtualKeyCode = (uint)targetKey;
+            uint scanCode = MapVirtualKey(virtualKeyCode, 0);
+            IntPtr lParam = (IntPtr)((scanCode << 16) | 0x0001); // 0x0001 for key-down
+            PostMessage(targetWindowHandle, 0x0100, (IntPtr)virtualKeyCode, lParam);
+        }
+
+        /// <summary>
+        /// Sends the key up.
+        /// </summary>
+        /// <param name="targetWindowHandle">Target window handle.</param>
+        /// <param name="targetKey">Target key.</param>
+        public void SendKeyUp(IntPtr targetWindowHandle, Keys targetKey)
+        {
+            uint virtualKeyCode = (uint)targetKey;
+            uint scanCode = MapVirtualKey(virtualKeyCode, 0);
+            IntPtr lParam = (IntPtr)((scanCode << 16) | 0x0002); // 0x0002 for key-up
+            PostMessage(targetWindowHandle, 0x0101, (IntPtr)virtualKeyCode, lParam);
         }
 
         /// <summary>
