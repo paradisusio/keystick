@@ -8,6 +8,7 @@ namespace KeyStick
     // Directives
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Linq;
     using System.Reflection;
@@ -269,7 +270,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnFreeReleasesParadisusioToolStripMenuItemClick(object sender, EventArgs e)
         {
-
+            // Open our releases website
+            Process.Start("https://paradisus.io");
         }
 
         /// <summary>
