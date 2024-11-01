@@ -357,7 +357,7 @@ namespace KeyStick
             if (!this.keyPressCheckBox.Checked)
             {
                 // Check for both a selected window and target key
-                if (this.targetWindowHandle == IntPtr.Zero || ((KeyItem)this.keyComboBox.SelectedItem).Name.ToLowerInvariant() == "none")
+                if (this.targetWindowHandle == IntPtr.Zero || this.targetKey == Keys.None)
                 {
                     // Halt flow
                     return;
@@ -411,9 +411,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnKeyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            //# 
             // Set the key
-            //# this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
+            this.targetKey = ((KeyItem)this.keyComboBox.SelectedItem).KeyCode;
         }
     }
 }
