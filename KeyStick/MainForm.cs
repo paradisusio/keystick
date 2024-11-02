@@ -275,7 +275,7 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Handles the original thread donation codercom tool strip menu item click.
+        /// Handles the original thread @ DonationCoder.com tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
@@ -285,13 +285,14 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Handles the source code githubcom tool strip menu item click.
+        /// Handles the source code @ GitHub.com tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
         private void OnSourceCodeGithubcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-
+            // Open GitHub repository
+            Process.Start("https://github.com/paradisusio/keystick");
         }
 
         /// <summary>
