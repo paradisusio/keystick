@@ -400,8 +400,12 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnTargetListViewSelectedIndexChanged(object sender, EventArgs e)
         {
-            // Set the target window handle
-            this.targetWindowHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
+            // Check something is selected
+            if (this.targetListView.SelectedItems.Count > 0)
+            {
+                // Set the target window handle
+                this.targetWindowHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
+            }
         }
 
         /// <summary>
