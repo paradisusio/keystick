@@ -41,7 +41,7 @@ namespace KeyStick
 			this.minimizeOnKeydownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.restoreOnKeyupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.freeReleasesParadisusisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpfulReleasesParadisusisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.originalThreadDonationCodercomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sourceCodeGithubcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -149,7 +149,7 @@ namespace KeyStick
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.freeReleasesParadisusisToolStripMenuItem,
+									this.helpfulReleasesParadisusisToolStripMenuItem,
 									this.originalThreadDonationCodercomToolStripMenuItem,
 									this.sourceCodeGithubcomToolStripMenuItem,
 									this.toolStripSeparator2,
@@ -158,13 +158,13 @@ namespace KeyStick
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
 			// 
-			// freeReleasesParadisusisToolStripMenuItem
+			// helpfulReleasesParadisusisToolStripMenuItem
 			// 
-			this.freeReleasesParadisusisToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("freeReleasesParadisusisToolStripMenuItem.Image")));
-			this.freeReleasesParadisusisToolStripMenuItem.Name = "freeReleasesParadisusisToolStripMenuItem";
-			this.freeReleasesParadisusisToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
-			this.freeReleasesParadisusisToolStripMenuItem.Text = "Free releases @ Paradisus.io";
-			this.freeReleasesParadisusisToolStripMenuItem.Click += new System.EventHandler(this.OnFreeReleasesParadisusioToolStripMenuItemClick);
+			this.helpfulReleasesParadisusisToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("helpfulReleasesParadisusisToolStripMenuItem.Image")));
+			this.helpfulReleasesParadisusisToolStripMenuItem.Name = "helpfulReleasesParadisusisToolStripMenuItem";
+			this.helpfulReleasesParadisusisToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+			this.helpfulReleasesParadisusisToolStripMenuItem.Text = "Helpful releases @ Paradisus.io";
+			this.helpfulReleasesParadisusisToolStripMenuItem.Click += new System.EventHandler(this.OnHelpfulReleasesParadisusioToolStripMenuItemClick);
 			// 
 			// originalThreadDonationCodercomToolStripMenuItem
 			// 
@@ -442,7 +442,7 @@ namespace KeyStick
 		private System.Windows.Forms.ToolStripMenuItem restoreOnKeyupToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem minimizeOnKeydownToolStripMenuItem;
 		private System.Windows.Forms.Timer keyPressTimer;
-		private System.Windows.Forms.ToolStripMenuItem freeReleasesParadisusisToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpfulReleasesParadisusisToolStripMenuItem;
 		private System.Windows.Forms.CheckBox keyPressCheckBox;
 		private System.Windows.Forms.ComboBox hotkeyComboBox;
 		private System.Windows.Forms.CheckBox shiftCheckBox;

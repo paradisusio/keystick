@@ -264,13 +264,13 @@ namespace KeyStick
         }
 
         /// <summary>
-        /// Handles the free Releases @ Paradisus.io tool strip menu item click.
+        /// Handles the Helpful releases @ Paradisus.io tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender.</param>
         /// <param name="e">E.</param>
-        private void OnFreeReleasesParadisusioToolStripMenuItemClick(object sender, EventArgs e)
+        private void OnHelpfulReleasesParadisusioToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // Open our releases website
+            // Open our helpful releases website
             Process.Start("https://paradisus.io");
         }
 
@@ -281,7 +281,8 @@ namespace KeyStick
         /// <param name="e">E.</param>
         private void OnOriginalThreadDonationCodercomToolStripMenuItemClick(object sender, EventArgs e)
         {
-
+            // Open original thread
+            Process.Start("https://www.donationcoder.com/forum/index.php?topic=54751.0");
         }
 
         /// <summary>
